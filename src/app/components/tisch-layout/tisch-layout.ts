@@ -40,8 +40,12 @@ export class TischLayout {
     this.minDate = this.getTodayDate();
     this.maxDate = this.getDateAfterDays(7);
     this.selectedDate = this.minDate;
+    this.bookingService.loadBookingsByDate(this.selectedDate);
   }
 
+  onDateChange(): void {
+    this.bookingService.loadBookingsByDate(this.selectedDate);
+  }
   getTodayDate(): string {
     return new Date().toISOString().split('T')[0];
   }

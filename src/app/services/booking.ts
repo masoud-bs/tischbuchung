@@ -61,4 +61,8 @@ export class BookingService {
 
     this.bookTable(tableId, user, date);
   }
+
+  loadBookingsByDate(date: string): void {
+    console.log('Load bookings for:', date);
+  }
 }
