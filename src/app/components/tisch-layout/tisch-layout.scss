@@ -1,0 +1,32 @@
+.room {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  gap: 20px;
+  padding: 40px;
+}
+
+.table {
+  width: 120px;
+  height: 120px;
+  background: #dcdcdc;
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.table:hover {
+  background: #bdbdbd;
+}
+
+.selected {
+  background: #4caf50;
+  color: white;
+}

@@ -1,1 +1,15 @@
-<p>tisch-layout works!</p>
+<div class="room">
+
+  @for (table of tables; track table) {
+
+    <div
+      class="table"
+      [class.selected]="selectedTable === table"
+      (click)="selectTable(table)"
+    >
+      {{ table }}
+    </div>
+
+  }
+
+</div>
