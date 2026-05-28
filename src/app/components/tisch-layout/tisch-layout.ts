@@ -29,6 +29,13 @@ export class TischLayout {
       return;
     }
 
+    if (!this.selectedUser) {
+      return;
+    }
+
+    table.booked = true;
+    table.user = this.selectedUser;
+
     this.selectedTable = table.id;
   }
 
