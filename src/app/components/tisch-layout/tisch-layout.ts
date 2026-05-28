@@ -26,14 +26,24 @@ export class TischLayout {
   selectedTable: number | null = null;
 
   selectTable(table: TableModel) {
-    if (table.booked) {
-      return;
-    }
-
     if (!this.selectedUser) {
       return;
     }
 
+    // Unbook own table
+    if (table.booked && table.user === this.selectedUser) {
+      table.booked = false;
+      table.user = '';
+
+      return;
+    }
+
+    // Already booked by another user
+    if (table.booked) {
+      return;
+    }
+
+    // Book table
     table.booked = true;
     table.user = this.selectedUser;
 
