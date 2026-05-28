@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BookingModel } from '../models/booking.model';
 import { HttpClient } from '@angular/common/http';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,28 @@ export class BookingService {
   isLoading = false;
   isSaving = false;
 
-  loadUsers(): string[] {
-    return ['Masoud', 'Janik', 'Nikolaus', 'Emma', 'Khaled'];
+  loadUsers(): UserModel[] {
+    const jrUsers = [
+      {
+        username: 'firouzi',
+        lastname: 'Firouzi',
+        prename: 'Masoud',
+        email: 'Masoud.Firouzi@behrens-schuleit.de',
+      },
+      {
+        username: 'busch',
+        lastname: 'Busch',
+        prename: 'Janik',
+        email: 'Janik.Busch@behrens-schuleit.de',
+      },
+    ];
+
+    return jrUsers.map((user) => ({
+      username: user.username,
+      displayName: user.prename,
+      lastname: user.lastname,
+      email: user.email,
+    }));
   }
 
   constructor(private http: HttpClient) {}
