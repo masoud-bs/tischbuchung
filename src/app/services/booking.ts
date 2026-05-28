@@ -19,4 +19,31 @@ export class BookingService {
 
     return booking ? booking.user : '';
   }
+
+  toggleBooking(tableId: number, user: string, date: string): void {
+    const existingBooking = this.bookings.find(
+      (booking) => booking.tableId === tableId && booking.date === date,
+    );
+
+    // Unbook own table
+    if (existingBooking && existingBooking.user === user) {
+      this.bookings = this.bookings.filter(
+        (booking) => !(booking.tableId === tableId && booking.date === date),
+      );
+
+      return;
+    }
+
+    // Already booked by another user
+    if (existingBooking) {
+      return;
+    }
+
+    // Book table
+    this.bookings.push({
+      tableId,
+      user,
+      date,
+    });
+  }
 }

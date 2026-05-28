@@ -56,30 +56,7 @@ export class TischLayout {
       return;
     }
 
-    const existingBooking = this.bookingService.bookings.find(
-      (booking) => booking.tableId === table.id && booking.date === this.selectedDate,
-    );
-
-    // Unbook own table
-    if (existingBooking && existingBooking.user === this.selectedUser) {
-      this.bookingService.bookings = this.bookingService.bookings.filter(
-        (booking) => !(booking.tableId === table.id && booking.date === this.selectedDate),
-      );
-
-      return;
-    }
-
-    // Already booked by another user
-    if (existingBooking) {
-      return;
-    }
-
-    // Book table
-    this.bookingService.bookings.push({
-      tableId: table.id,
-      user: this.selectedUser,
-      date: this.selectedDate,
-    });
+    this.bookingService.toggleBooking(table.id, this.selectedUser, this.selectedDate);
 
     this.selectedTable = table.id;
   }
