@@ -89,16 +89,10 @@ export class TischLayout {
   }
 
   isTableBooked(tableId: number): boolean {
-    return this.bookingService.bookings.some(
-      (booking) => booking.tableId === tableId && booking.date === this.selectedDate,
-    );
+    return this.bookingService.isTableBooked(tableId, this.selectedDate);
   }
 
   getTableUser(tableId: number): string {
-    const booking = this.bookingService.bookings.find(
-      (booking) => booking.tableId === tableId && booking.date === this.selectedDate,
-    );
-
-    return booking ? booking.user : '';
+    return this.bookingService.getTableUser(tableId, this.selectedDate);
   }
 }
