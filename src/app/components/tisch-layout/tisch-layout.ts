@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TableModel } from '../../models/table.model';
 import { FormsModule } from '@angular/forms';
 import { BookingService } from '../../services/booking';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-tisch-layout',
@@ -21,9 +22,9 @@ export class TischLayout {
     { id: 8 },
   ];
 
-  users = ['Masoud', 'Janik', 'Nikolaus', 'Emma', 'Khaled'];
+  users: UserModel[] = [];
 
-  selectedUser = '';
+  selectedUser: UserModel | null = null;
   minDate = '';
   maxDate = '';
   selectedDate = '';
@@ -33,6 +34,11 @@ export class TischLayout {
     this.minDate = this.getTodayDate();
     this.maxDate = this.getDateAfterDays(7);
     this.selectedDate = this.minDate;
+    this.users = this.bookingService.loadUsers();
+
+    const currentUsername = this.bookingService.getCurrentUsername();
+
+    this.selectedUser = this.users.find((user) => user.username === currentUsername) ?? null;
     this.bookingService.loadBookingsByDate(this.selectedDate);
   }
 
@@ -53,12 +59,12 @@ export class TischLayout {
       return;
     }
 
-    this.bookingService.toggleBooking(table.id, this.selectedUser, this.selectedDate);
+    this.bookingService.toggleBooking(table.id, this.selectedUser.username, this.selectedDate);
 
     this.selectedTable = table.id;
   }
 
-  selectUser(user: string) {
+  selectUser(user: UserModel) {
     this.selectedUser = user;
   }
 

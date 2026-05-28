@@ -132,4 +132,8 @@ export class BookingService {
 
     this.isLoading = false;
   }
+
+  getCurrentUsername(): string {
+    return 'firouzi';
+  }
 }
