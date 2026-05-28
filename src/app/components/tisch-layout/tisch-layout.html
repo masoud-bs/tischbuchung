@@ -1,15 +1,14 @@
 <div class="room">
 
-  @for (table of tables; track table) {
-
+  @for (table of tables; track table.id) {
     <div
-      class="table"
-      [class.selected]="selectedTable === table"
-      (click)="selectTable(table)"
-    >
-      {{ table }}
+        class="table"
+        [class.selected]="selectedTable === table.id"
+        [class.booked]="table.booked"
+        (click)="selectTable(table)"
+        >
+        {{ table.id }}
     </div>
-
   }
 
 </div>
