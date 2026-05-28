@@ -1,14 +1,34 @@
-<div class="room">
-
-  @for (table of tables; track table.id) {
-    <div
+<div class="layout">
+  <div class="room">
+    @for (table of tables; track table.id) {
+      <div
         class="table"
         [class.selected]="selectedTable === table.id"
         [class.booked]="table.booked"
         (click)="selectTable(table)"
-        >
-        {{ table.id }}
-    </div>
-  }
+      >
+        <div class="table-content">
+          <span class="table-id">
+            {{ table.id }}
+          </span>
 
+          @if (table.user) {
+            <span class="user-name">
+              {{ table.user }}
+            </span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="user-panel">
+    <h2>User</h2>
+
+    @for (user of users; track user) {
+      <div class="user-card" [class.active-user]="selectedUser === user" (click)="selectUser(user)">
+        {{ user }}
+      </div>
+    }
+  </div>
 </div>

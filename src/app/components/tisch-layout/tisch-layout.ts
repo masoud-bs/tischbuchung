@@ -7,22 +7,24 @@ import { Component } from '@angular/core';
   styleUrl: './tisch-layout.scss',
 })
 export class TischLayout {
-
   tables = [
-    { id: 1, booked: false },
-    { id: 2, booked: true },
-    { id: 3, booked: false },
-    { id: 4, booked: true },
-    { id: 5, booked: false },
-    { id: 6, booked: false },
-    { id: 7, booked: true },
-    { id: 8, booked: false },
+    { id: 1, booked: false, user: '' },
+    { id: 2, booked: true, user: 'Masoud' },
+    { id: 3, booked: false, user: '' },
+    { id: 4, booked: true, user: 'Janik' },
+    { id: 5, booked: false, user: '' },
+    { id: 6, booked: false, user: '' },
+    { id: 7, booked: true, user: 'Nikolaus' },
+    { id: 8, booked: false, user: '' },
   ];
+
+  users = ['Masoud', 'Janik', 'Nikolaus', 'Emma', 'Khaled'];
+
+  selectedUser = '';
 
   selectedTable: number | null = null;
 
   selectTable(table: any) {
-
     if (table.booked) {
       return;
     }
@@ -30,4 +32,7 @@ export class TischLayout {
     this.selectedTable = table.id;
   }
 
+  selectUser(user: string) {
+    this.selectedUser = user;
+  }
 }
