@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TableModel } from '../../models/table.model';
 import { FormsModule } from '@angular/forms';
-import { BookingModel } from '../../models/booking.model';
+import { BookingService } from '../../services/booking';
 
 @Component({
   selector: 'app-tisch-layout',
@@ -21,14 +21,6 @@ export class TischLayout {
     { id: 8 },
   ];
 
-  bookings: BookingModel[] = [
-    {
-      tableId: 2,
-      user: 'Masoud',
-      date: this.getTodayDate(),
-    },
-  ];
-
   users = ['Masoud', 'Janik', 'Nikolaus', 'Emma', 'Khaled'];
 
   selectedUser = '';
@@ -37,7 +29,14 @@ export class TischLayout {
   selectedDate = '';
   selectedTable: number | null = null;
 
-  constructor() {
+  constructor(public bookingService: BookingService) {
+    this.bookingService.bookings = [
+      {
+        tableId: 2,
+        user: 'Masoud',
+        date: this.getTodayDate(),
+      },
+    ];
     this.minDate = this.getTodayDate();
     this.maxDate = this.getDateAfterDays(7);
     this.selectedDate = this.minDate;
@@ -57,13 +56,13 @@ export class TischLayout {
       return;
     }
 
-    const existingBooking = this.bookings.find(
+    const existingBooking = this.bookingService.bookings.find(
       (booking) => booking.tableId === table.id && booking.date === this.selectedDate,
     );
 
     // Unbook own table
     if (existingBooking && existingBooking.user === this.selectedUser) {
-      this.bookings = this.bookings.filter(
+      this.bookingService.bookings = this.bookingService.bookings.filter(
         (booking) => !(booking.tableId === table.id && booking.date === this.selectedDate),
       );
 
@@ -76,7 +75,7 @@ export class TischLayout {
     }
 
     // Book table
-    this.bookings.push({
+    this.bookingService.bookings.push({
       tableId: table.id,
       user: this.selectedUser,
       date: this.selectedDate,
@@ -90,13 +89,13 @@ export class TischLayout {
   }
 
   isTableBooked(tableId: number): boolean {
-    return this.bookings.some(
+    return this.bookingService.bookings.some(
       (booking) => booking.tableId === tableId && booking.date === this.selectedDate,
     );
   }
 
   getTableUser(tableId: number): string {
-    const booking = this.bookings.find(
+    const booking = this.bookingService.bookings.find(
       (booking) => booking.tableId === tableId && booking.date === this.selectedDate,
     );
 
