@@ -10,6 +10,10 @@ export class BookingService {
   isLoading = false;
   isSaving = false;
 
+  loadUsers(): string[] {
+    return ['Masoud', 'Janik', 'Nikolaus', 'Emma', 'Khaled'];
+  }
+
   constructor(private http: HttpClient) {}
 
   getBookingsByDate(date: string): BookingModel[] {
@@ -25,7 +29,7 @@ export class BookingService {
       (booking) => booking.tableId === tableId && booking.date === date,
     );
 
-    return booking ? booking.user : '';
+    return booking ? booking.displayName : '';
   }
 
   bookTable(tableId: number, user: string, date: string): void {
@@ -33,7 +37,8 @@ export class BookingService {
 
     this.bookings.push({
       tableId,
-      user,
+      username: user,
+      displayName: user,
       date,
     });
 
@@ -42,7 +47,12 @@ export class BookingService {
 
   unbookTable(tableId: number, user: string, date: string): void {
     this.bookings = this.bookings.filter(
-      (booking) => !(booking.tableId === tableId && booking.date === date && booking.user === user),
+      (booking) =>
+        !(
+          booking.tableId === tableId &&
+          booking.date === date &&
+          (booking.username === user || booking.displayName === user)
+        ),
     );
   }
 
@@ -51,7 +61,10 @@ export class BookingService {
       (booking) => booking.tableId === tableId && booking.date === date,
     );
 
-    if (existingBooking && existingBooking.user === user) {
+    if (
+      existingBooking &&
+      (existingBooking.username === user || existingBooking.displayName === user)
+    ) {
       this.unbookTable(tableId, user, date);
       return;
     }
@@ -66,13 +79,33 @@ export class BookingService {
   loadBookingsByDate(date: string): void {
     this.isLoading = true;
 
+    /*const url =
+      'https://jobrouter.behrens-schuleit.de/jobrouter/api/rest/v2/application/steps/new/dialogfunctions/GetTableBookings';
+
+    this.http.post<any>(url, {}).subscribe({
+      next: (response) => {
+        this.bookings = response.dialogfunctions.returnValues.TableBookings;
+
+        this.isLoading = false;
+      },
+
+      error: (error) => {
+        console.error('Load bookings error:', error);
+
+        this.isLoading = false;
+      },
+    });*/
     console.log('Load bookings for:', date);
 
     this.bookings = [
       {
         tableId: 2,
-        user: 'Masoud',
-        date: date,
+
+        username: 'firouzi',
+
+        displayName: 'Masoud',
+
+        date,
       },
     ];
 

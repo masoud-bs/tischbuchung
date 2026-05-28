@@ -1,5 +1,6 @@
 export interface BookingModel {
   tableId: number;
-  user: string;
+  username: string;
+  displayName: string;
   date: string;
 }

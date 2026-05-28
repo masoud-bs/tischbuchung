@@ -30,13 +30,6 @@ export class TischLayout {
   selectedTable: number | null = null;
 
   constructor(public bookingService: BookingService) {
-    this.bookingService.bookings = [
-      {
-        tableId: 2,
-        user: 'Masoud',
-        date: this.getTodayDate(),
-      },
-    ];
     this.minDate = this.getTodayDate();
     this.maxDate = this.getDateAfterDays(7);
     this.selectedDate = this.minDate;
