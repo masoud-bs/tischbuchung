@@ -11,6 +11,14 @@
     {{ selectedDate }}
   </span>
 </div>
+
+@if (bookingService.isLoading) {
+  <div class="loading">Loading bookings...</div>
+}
+
+@if (bookingService.isSaving) {
+  <div class="loading">Saving booking...</div>
+}
 <div class="layout">
   <div class="room">
     @for (table of tables; track table.id) {

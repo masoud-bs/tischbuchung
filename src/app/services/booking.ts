@@ -7,8 +7,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BookingService {
   bookings: BookingModel[] = [];
+  isLoading = false;
+  isSaving = false;
 
   constructor(private http: HttpClient) {}
+
   getBookingsByDate(date: string): BookingModel[] {
     return this.bookings.filter((booking) => booking.date === date);
   }
@@ -26,19 +29,15 @@ export class BookingService {
   }
 
   bookTable(tableId: number, user: string, date: string): void {
-    const existingBooking = this.bookings.find(
-      (booking) => booking.tableId === tableId && booking.date === date,
-    );
-
-    if (existingBooking) {
-      return;
-    }
+    this.isSaving = true;
 
     this.bookings.push({
       tableId,
       user,
       date,
     });
+
+    this.isSaving = false;
   }
 
   unbookTable(tableId: number, user: string, date: string): void {
@@ -65,17 +64,18 @@ export class BookingService {
   }
 
   loadBookingsByDate(date: string): void {
+    this.isLoading = true;
+
     console.log('Load bookings for:', date);
-    /* const url = 'https://example.com/api/bookings?date=' + date;
 
-    this.http.get(url).subscribe({
-      next: (response) => {
-        console.log('API response:', response);
+    this.bookings = [
+      {
+        tableId: 2,
+        user: 'Masoud',
+        date: date,
       },
+    ];
 
-      error: (error) => {
-        console.error('API error:', error);
-      },
-    });*/
+    this.isLoading = false;
   }
 }
