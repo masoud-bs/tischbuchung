@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TableModel } from '../../models/table.model';
 import { FormsModule } from '@angular/forms';
+import { BookingModel } from '../../models/booking.model';
 
 @Component({
   selector: 'app-tisch-layout',
@@ -10,14 +11,22 @@ import { FormsModule } from '@angular/forms';
 })
 export class TischLayout {
   tables: TableModel[] = [
-    { id: 1, booked: false, user: '' },
-    { id: 2, booked: true, user: 'Masoud' },
-    { id: 3, booked: false, user: '' },
-    { id: 4, booked: true, user: 'Janik' },
-    { id: 5, booked: false, user: '' },
-    { id: 6, booked: false, user: '' },
-    { id: 7, booked: true, user: 'Nikolaus' },
-    { id: 8, booked: false, user: '' },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+  ];
+
+  bookings: BookingModel[] = [
+    {
+      tableId: 2,
+      user: 'Masoud',
+      date: this.getTodayDate(),
+    },
   ];
 
   users = ['Masoud', 'Janik', 'Nikolaus', 'Emma', 'Khaled'];
@@ -48,27 +57,49 @@ export class TischLayout {
       return;
     }
 
+    const existingBooking = this.bookings.find(
+      (booking) => booking.tableId === table.id && booking.date === this.selectedDate,
+    );
+
     // Unbook own table
-    if (table.booked && table.user === this.selectedUser) {
-      table.booked = false;
-      table.user = '';
+    if (existingBooking && existingBooking.user === this.selectedUser) {
+      this.bookings = this.bookings.filter(
+        (booking) => !(booking.tableId === table.id && booking.date === this.selectedDate),
+      );
 
       return;
     }
 
     // Already booked by another user
-    if (table.booked) {
+    if (existingBooking) {
       return;
     }
 
     // Book table
-    table.booked = true;
-    table.user = this.selectedUser;
+    this.bookings.push({
+      tableId: table.id,
+      user: this.selectedUser,
+      date: this.selectedDate,
+    });
 
     this.selectedTable = table.id;
   }
 
   selectUser(user: string) {
     this.selectedUser = user;
+  }
+
+  isTableBooked(tableId: number): boolean {
+    return this.bookings.some(
+      (booking) => booking.tableId === tableId && booking.date === this.selectedDate,
+    );
+  }
+
+  getTableUser(tableId: number): string {
+    const booking = this.bookings.find(
+      (booking) => booking.tableId === tableId && booking.date === this.selectedDate,
+    );
+
+    return booking ? booking.user : '';
   }
 }

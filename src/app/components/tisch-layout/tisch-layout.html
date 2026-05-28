@@ -11,7 +11,7 @@
       <div
         class="table"
         [class.selected]="selectedTable === table.id"
-        [class.booked]="table.booked"
+        [class.booked]="isTableBooked(table.id)"
         (click)="selectTable(table)"
       >
         <div class="table-content">
@@ -19,9 +19,9 @@
             {{ table.id }}
           </span>
 
-          @if (table.user) {
+          @if (getTableUser(table.id)) {
             <span class="user-name">
-              {{ table.user }}
+              {{ getTableUser(table.id) }}
             </span>
           }
         </div>
