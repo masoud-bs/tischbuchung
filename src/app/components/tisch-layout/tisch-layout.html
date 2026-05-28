@@ -42,18 +42,4 @@
       </div>
     }
   </div>
-
-  <div class="user-panel">
-    <h2>User</h2>
-
-    @for (user of users; track user.username) {
-      <div
-        class="user-card"
-        [class.active-user]="selectedUser?.username === user.username"
-        (click)="selectUser(user)"
-      >
-        {{ user.displayName }}
-      </div>
-    }
-  </div>
 </div>
