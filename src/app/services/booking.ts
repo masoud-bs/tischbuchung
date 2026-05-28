@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BookingModel } from '../models/booking.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -7,6 +8,7 @@ import { BookingModel } from '../models/booking.model';
 export class BookingService {
   bookings: BookingModel[] = [];
 
+  constructor(private http: HttpClient) {}
   getBookingsByDate(date: string): BookingModel[] {
     return this.bookings.filter((booking) => booking.date === date);
   }
@@ -64,5 +66,16 @@ export class BookingService {
 
   loadBookingsByDate(date: string): void {
     console.log('Load bookings for:', date);
+    /* const url = 'https://example.com/api/bookings?date=' + date;
+
+    this.http.get(url).subscribe({
+      next: (response) => {
+        console.log('API response:', response);
+      },
+
+      error: (error) => {
+        console.error('API error:', error);
+      },
+    });*/
   }
 }
