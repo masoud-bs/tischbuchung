@@ -1,3 +1,10 @@
+<div class="date-bar">
+  <input type="date" [(ngModel)]="selectedDate" [min]="minDate" [max]="maxDate" />
+
+  <span class="date-text">
+    {{ selectedDate }}
+  </span>
+</div>
 <div class="layout">
   <div class="room">
     @for (table of tables; track table.id) {

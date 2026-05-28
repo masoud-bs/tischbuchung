@@ -79,3 +79,14 @@
   background: #1976d2;
   color: white;
 }
+
+.date-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 40px 0 40px;
+}
+
+.date-text {
+  font-weight: bold;
+}

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { TableModel } from '../../models/table.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tisch-layout',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './tisch-layout.html',
   styleUrl: './tisch-layout.scss',
 })
@@ -22,9 +23,26 @@ export class TischLayout {
   users = ['Masoud', 'Janik', 'Nikolaus', 'Emma', 'Khaled'];
 
   selectedUser = '';
-
+  minDate = '';
+  maxDate = '';
+  selectedDate = '';
   selectedTable: number | null = null;
 
+  constructor() {
+    this.minDate = this.getTodayDate();
+    this.maxDate = this.getDateAfterDays(7);
+    this.selectedDate = this.minDate;
+  }
+
+  getTodayDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  getDateAfterDays(days: number): string {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    return date.toISOString().split('T')[0];
+  }
   selectTable(table: TableModel) {
     if (!this.selectedUser) {
       return;
