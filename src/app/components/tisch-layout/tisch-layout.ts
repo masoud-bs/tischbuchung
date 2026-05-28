@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TableModel } from '../../models/table.model';
 
 @Component({
   selector: 'app-tisch-layout',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './tisch-layout.scss',
 })
 export class TischLayout {
-  tables = [
+  tables: TableModel[] = [
     { id: 1, booked: false, user: '' },
     { id: 2, booked: true, user: 'Masoud' },
     { id: 3, booked: false, user: '' },
@@ -24,7 +25,7 @@ export class TischLayout {
 
   selectedTable: number | null = null;
 
-  selectTable(table: any) {
+  selectTable(table: TableModel) {
     if (table.booked) {
       return;
     }
